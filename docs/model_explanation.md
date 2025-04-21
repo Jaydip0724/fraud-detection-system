@@ -2,13 +2,13 @@
 
 ## Introduction
 
-This document explains the machine learning model used in our real-time fraud detection system, detailing the architecture, methodology, and rationale behind our approach. The system is designed to identify fraudulent transactions while minimizing both false positives and false negatives.
+This document explains the machine learning model used in my real-time fraud detection system, detailing the architecture, methodology, and rationale behind my approach. The system is designed to identify fraudulent transactions while minimizing both false positives and false negatives.
 
 ## Model Selection
 
 ### Why RandomForest?
 
-We chose the Random Forest classifier for the following reasons:
+I chose the Random Forest classifier for the following reasons:
 
 1. **Robustness to outliers**: Financial transactions data typically contains outliers, and Random Forest is less sensitive to them than parametric models.
 
@@ -20,11 +20,11 @@ We chose the Random Forest classifier for the following reasons:
 
 5. **Performance on imbalanced data**: When combined with appropriate class weighting, Random Forest performs well on highly imbalanced datasets where fraud transactions are rare.
 
-6. **Computational efficiency**: The model can be trained and updated relatively quickly, which is essential for our real-time system that needs frequent retraining.
+6. **Computational efficiency**: The model can be trained and updated relatively quickly, which is essential for my real-time system that needs frequent retraining.
 
 ## Feature Engineering and Selection
 
-Our model uses 29 input features:
+My model uses 29 input features:
 
 - **V1-V28**: Anonymized features resulting from PCA transformation (for privacy/security reasons)
 - **Amount**: The transaction amount
@@ -33,7 +33,7 @@ The PCA transformation helps maintain privacy while preserving the discriminativ
 
 ### Feature Importance
 
-Based on our analysis, the top 5 most important features for fraud detection are typically:
+Based on my analysis, the top 5 most important features for fraud detection are typically:
 
 1. V17
 2. V14
@@ -45,13 +45,13 @@ This varies slightly with each model update as the system learns from new data.
 
 ## Handling Class Imbalance
 
-Fraudulent transactions typically represent less than 0.1% of all transactions. To address this severe class imbalance, we employ multiple techniques:
+Fraudulent transactions typically represent less than 0.1% of all transactions. To address this severe class imbalance, I employ multiple techniques:
 
-1. **Class weighting**: We use `class_weight='balanced'` in the RandomForest, which automatically adjusts weights inversely proportional to class frequencies.
+1. **Class weighting**: I use `class_weight='balanced'` in the RandomForest, which automatically adjusts weights inversely proportional to class frequencies.
 
-2. **Performance metrics**: We focus on precision, recall, and F1-score rather than accuracy, since accuracy can be misleading with imbalanced datasets.
+2. **Performance metrics**: I focus on precision, recall, and F1-score rather than accuracy, since accuracy can be misleading with imbalanced datasets.
 
-3. **Threshold adjustment**: We optimize the classification threshold to balance precision and recall rather than using the default 0.5 threshold.
+3. **Threshold adjustment**: I optimize the classification threshold to balance precision and recall rather than using the default 0.5 threshold.
 
 ## Model Training and Continuous Learning
 
@@ -70,7 +70,7 @@ RandomForestClassifier(
 
 ### Adaptive Learning
 
-A key feature of our system is its ability to continuously improve through adaptive learning:
+A key feature of my system is its ability to continuously improve through adaptive learning:
 
 1. When the system misclassifies a transaction (as confirmed later), it uses this example to update the model.
 
@@ -82,7 +82,7 @@ A key feature of our system is its ability to continuously improve through adapt
 
 ### Key Metrics
 
-We monitor the following metrics:
+I monitor the following metrics:
 
 1. **Precision**: Percentage of transactions flagged as fraud that are actually fraudulent
 2. **Recall**: Percentage of actual fraudulent transactions that are correctly identified
@@ -97,11 +97,11 @@ In fraud detection, different types of errors have different costs:
 - **False Negatives** (missed fraud): Typically very costly as they result in direct financial loss
 - **False Positives** (false alarms): Lead to customer friction and operational costs
 
-Our model evaluation incorporates a cost matrix that assigns appropriate weights to these error types, ensuring the model optimizes for business impact rather than just statistical metrics.
+My model evaluation incorporates a cost matrix that assigns appropriate weights to these error types, ensuring the model optimizes for business impact rather than just statistical metrics.
 
 ## Threshold Selection
 
-Instead of using a fixed probability threshold for classification (e.g., 0.5), we employ an optimized threshold that maximizes the F1-score on our validation set. This threshold is regularly recalibrated as the model is updated.
+Instead of using a fixed probability threshold for classification (e.g., 0.5), I employ an optimized threshold that maximizes the F1-score on my validation set. This threshold is regularly recalibrated as the model is updated.
 
 ## Limitations and Considerations
 
@@ -111,7 +111,7 @@ Instead of using a fixed probability threshold for classification (e.g., 0.5), w
 
 3. **Feature anonymization**: While necessary for privacy, the PCA transformation reduces interpretability.
 
-4. **Imbalanced learning challenges**: Despite our countermeasures, extreme class imbalance remains a fundamental challenge.
+4. **Imbalanced learning challenges**: Despite my countermeasures, extreme class imbalance remains a fundamental challenge.
 
 ## Future Improvements
 
